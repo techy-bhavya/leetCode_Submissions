@@ -7,13 +7,13 @@
 #select machine_id, max(case when activity_type='start' then timestamp end) as start_time, max(case when activity_type='end' then timestamp end) as end_time from Activity group by machine_id, process_id;
 
 #correct query 1
-with temp as (select machine_id, max(case when activity_type='start' then timestamp end) as start_time, max(case when activity_type='end' then timestamp end) as end_time from Activity group by machine_id, process_id) 
-select machine_id, round(avg(end_time-start_time),3) as processing_time from temp group by machine_id;
+#with temp as (select machine_id, max(case when activity_type='start' then timestamp end) as start_time, max(case when activity_type='end' then timestamp end) as end_time from Activity group by machine_id, process_id) 
+#select machine_id, round(avg(end_time-start_time),3) as processing_time from temp group by machine_id;
 
 #correct query 2
-/*
+
 SELECT machine_id,
-       AVG(end_time - start_time) AS processing_time
+       ROUND(AVG(end_time - start_time),3) AS processing_time
 FROM
 (
     SELECT 
@@ -25,4 +25,3 @@ FROM
     GROUP BY machine_id, process_id
 ) x
 GROUP BY machine_id;
-*/
