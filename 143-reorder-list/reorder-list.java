@@ -34,7 +34,7 @@ class Solution {
     }
 
     public void reorderList(ListNode head) {
-        if(head==null || head.next == null) return;
+        //if(head==null || head.next == null) return;
         ListNode mid = getMiddleNode(head);
         ListNode secondHalfHead = mid.next;
         mid.next=null;
