@@ -1,26 +1,29 @@
 class Solution {
-    public void recPermute(int[] nums, List<Integer> ds, boolean[] freq, List<List<Integer>> finalAns){
-        for(int i=0;i<nums.length;i++){
-            if(nums.length == ds.size()){
-                finalAns.add(new ArrayList<>(ds));
-                return;
+    public void recPermute(int idx, int[] nums, List<List<Integer>> finalAns){
+        if(idx==nums.length){
+            List<Integer> ans = new ArrayList<>();
+            for(int i: nums){
+                ans.add(i);
             }
-
-            if(!freq[i]){
-                freq[i] = true;
-                ds.add(nums[i]);
-                recPermute(nums, ds, freq, finalAns);
-                freq[i] = false;
-                ds.remove(ds.size()-1);
-            }
+            finalAns.add(new ArrayList<>(ans));
+            return;
         }
+        for(int i = idx; i<nums.length;i++){
+            swap(i, idx, nums);
+            recPermute(idx+1, nums, finalAns);
+            swap(i, idx, nums);
+        }
+    }
+
+    public static void swap(int i, int j, int[] arr){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> finalAns = new ArrayList<>();
-        List<Integer> ds = new ArrayList<>();
-        boolean[] freq = new boolean[nums.length];
-        recPermute(nums, ds, freq, finalAns);
+        recPermute(0, nums, finalAns);
         return finalAns;
     }
 }
