@@ -9,59 +9,61 @@
  * }
  */
 class Solution {
-
-    ListNode ohead = null;
-    ListNode otail = null;
-    ListNode thead = null;
-    ListNode ttail = null;
-
-    public static int getSize(ListNode head){
+    public int getSize(ListNode head){
+        int count = 0;
         ListNode ptr = head;
-        int count=0;
         while(ptr!=null){
             count++;
-            ptr=ptr.next;
+            ptr = ptr.next;
         }
         return count;
     }
 
+    ListNode oHead = null;
+    ListNode oTail = null;
+    ListNode tHead = null;
+    ListNode tTail = null;
+
     public void addFirst(ListNode node){
-        if(thead == null){
-            thead = node;
-            ttail = node;
+        if(tHead == null){
+            tHead = node;
+            tTail = node;
         }
         else{
-            node.next = thead;
-            thead = node;
+            node.next = tHead;
+            tHead = node;
         }
     }
-
-    
 
     public ListNode reverseKGroup(ListNode head, int k) {
-        int size = getSize(head);
-        ListNode curr = head;
-        while(size>=k){
-            int K = k;
-            while(K-->0){
-                ListNode currNext = curr.next;
-                addFirst(curr);
-                curr = currNext;
-                size--;
-            }
+            int size = getSize(head);
+            ListNode curr = head;
+            while(size>=k){
+                int K = k; //kyoki harbaar yeh loop khatm hone k baad, k ka value toh 0 ho jaega na...toh yeh value kho na jaye, isliye kahi aur save karalo, coz utna nodes ko isolate karke add karna h using addFirst
 
-            if(ohead==null){
-                ohead = thead;
-                otail = ttail;
+                while(K-->0){
+                    ListNode currNext = curr.next;
+                    curr.next = null;
+                    addFirst(curr);
+                    curr = currNext;
+                    size--;
+                    
+                }
+                // yaha pe vo temporary ll ban gya, ab, depending on whether pehle se list h ya nhi, vo original mein attach hoga, ya original ban jaega
+                if(oHead == null){
+                    oHead = tHead;
+                    oTail = tTail;
+                }
+                else{
+                    oTail.next = tHead;
+                    oTail = tTail;
+                }
+                
+                tHead = null;
+                tTail = null;
             }
-            else{
-                otail.next = thead;
-                otail = ttail;
-            }
-            thead=null;
-            ttail=null;
-        }
-        otail.next = curr;
-        return ohead;
+            oTail.next = curr;
+            return oHead;
     }
 }
+
