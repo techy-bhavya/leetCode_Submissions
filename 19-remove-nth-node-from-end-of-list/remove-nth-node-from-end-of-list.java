@@ -20,10 +20,9 @@ class Solution {
         ListNode dummy = new ListNode(0, head);
         ListNode slow = dummy;
         ListNode fast = head;
-        for(int i=0;i<n;i++){
-            if(fast==null) return null;
+        while(n>0 && fast!=null) {
             fast = fast.next;
-
+            n--;
         }
         while(fast!=null){
             slow = slow.next;
