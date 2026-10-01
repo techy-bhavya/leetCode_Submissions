@@ -9,9 +9,9 @@ class Solution {
             else{
                 if(st.size()==0) return false;
                 char top = st.pop();
-                if(ch==')' && top!='(') return false;
-                if(ch=='}' && top!='{') return false;
-                if(ch==']' && top!='[') return false;
+                if(ch==')' && top != '(') return false;
+                if(ch=='}' && top != '{') return false;
+                if(ch==']' && top != '[') return false;
             }
         }
         return st.size()==0;
