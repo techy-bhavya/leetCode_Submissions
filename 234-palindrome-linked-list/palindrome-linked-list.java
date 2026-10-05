@@ -8,7 +8,7 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution { 
+class Solution {
     public boolean isPalindrome(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
@@ -16,21 +16,23 @@ class Solution {
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode curr = slow.next;
-        slow.next = null;
         ListNode prev = null;
+        ListNode curr = slow.next;
+        slow.next=null;
         while(curr!=null){
             ListNode currNext = curr.next;
             curr.next = prev;
             prev = curr;
             curr = currNext;
         }
-        ListNode left = head;
-        ListNode right = prev;
-        while(left!=null && right!=null){
-            if(left.val!=right.val) return false;
-            left = left.next;
-            right = right.next;
+        ListNode ogHead = head;
+        ListNode newHead = prev;
+        while(ogHead!=null && newHead!=null){
+            if(ogHead.val!=newHead.val){
+                return false;
+            }
+            ogHead = ogHead.next;
+            newHead = newHead.next;
         }
         return true;
     }
