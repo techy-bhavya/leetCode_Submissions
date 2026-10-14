@@ -4,12 +4,9 @@ class Solution {
         Stack<Integer> st = new Stack<>();
         int[] nge = new int[n];
         Arrays.fill(nge, n);
-        for(int i=n-1;i>=0;i--){
-            while(st.size()>0 && nums[st.peek()]<=nums[i]){
-                st.pop();
-            }
-            if(st.size()>0){
-                nge[i] = st.peek();
+        for(int i=0;i<n;i++){
+            while(st.size()>0 && nums[st.peek()]<nums[i]){
+                nge[st.pop()] = i;
             }
             st.push(i);
         }
