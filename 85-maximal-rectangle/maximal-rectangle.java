@@ -1,6 +1,6 @@
 class Solution {
     public int maximalRectangle(char[][] matrix) {
-        if(matrix == null || matrix.length==0 || matrix[0].length==0){
+        if(matrix==null || matrix.length==0 || matrix[0].length==0){
             return 0;
         }
         int rows = matrix.length;
@@ -23,37 +23,35 @@ class Solution {
 
     public int largestRectangleArea(int[] heights) {
         int n = heights.length;
-        int[] nse = new int[n];
-        int[] pse = new int[n];
-        Arrays.fill(nse,n);
-        Arrays.fill(pse,-1);
         Stack<Integer> st = new Stack<>();
-        for(int i=n-1;i>=0;i--){
-            while(st.size()>0 && heights[st.peek()]>=heights[i]){
-                st.pop();
-            }
-            if(st.size()>0){
-                nse[i] = st.peek();
-            }
-            st.push(i);
-        }
-        st = new Stack<>();
-        for(int i=0;i<n;i++){
-            while(st.size()>0 && heights[st.peek()]>=heights[i]){
-                st.pop();
-            }
-            if(st.size()>0){
-                pse[i] = st.peek();
-            }
-            st.push(i);
-        }
+        st.push(-1);
+
         int maxArea = 0;
-        for(int i=0;i<n;i++){
-            int ht = heights[i];
-            int width = nse[i]-pse[i]-1;
-            int area = ht*width;
-            maxArea = Math.max(maxArea, area);
+        
+        for(int i=0; i<n; i++){
+            while(st.peek()!=-1 && heights[st.peek()] > heights[i]){
+                int poppedIdx = st.pop();
+
+                int h = heights[poppedIdx];
+                int nsr = i;
+                int nsl = st.peek();
+
+                maxArea = Math.max(maxArea, h*(nsr - nsl - 1));
+            }
+
+            st.push(i);
         }
+
+        while(st.peek() != -1){
+            int poppedIdx = st.pop();
+
+            int h = heights[poppedIdx];
+            int nsr = n;
+            int nsl = st.peek();
+
+            maxArea = Math.max(maxArea, h*(nsr - nsl - 1));
+        }
+
         return maxArea;
     }
 }
