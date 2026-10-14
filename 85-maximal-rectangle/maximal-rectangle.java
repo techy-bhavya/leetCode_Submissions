@@ -29,7 +29,7 @@ class Solution {
         int maxArea = 0;
         
         for(int i=0; i<n; i++){
-            while(st.peek()!=-1 && heights[st.peek()] >= heights[i]){
+            while(st.peek()!=-1 && heights[st.peek()] > heights[i]){
                 int poppedIdx = st.pop();
 
                 int h = heights[poppedIdx];
